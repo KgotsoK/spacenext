@@ -1,5 +1,5 @@
 import React from 'react';
-import { Launch } from '@/types/launchTypes';
+import { Launch, Rocket, Launchpad } from '@/types/launchTypes';
 import { FaCalendarAlt, FaRocket, FaBuilding, FaMapMarkerAlt } from 'react-icons/fa';
 
 interface LaunchCardProps {
@@ -10,16 +10,22 @@ interface LaunchCardProps {
 }
 
 const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
-  // Extract data safely using the updated Launch type
-  const missionName = launch.name || launch.missions?.[0]?.name || 'Unnamed Mission';
-  // Prioritize specific dates, fallback to date_str
-  const launchDate = launch.win_open || launch.t0 || launch.sort_date;
-  const vehicleName = launch.vehicle?.name || 'Unknown Vehicle';
-  const providerName = launch.provider?.name || 'Unknown Provider';
-  const locationName = launch.pad?.location?.name || 'Unknown Location';
-  const padName = launch.pad?.name || '';
-
-  // TODO: Apply dynamic styles based on isActive and potentially other props for Coverflow
+  // Extract data from the SpaceX API v5 format
+  const missionName = launch.name || 'Unnamed Mission';
+  
+  // Get rocket data (either from populated object or default)
+  const rocketObj = typeof launch.rocket === 'object' ? launch.rocket as Rocket : null;
+  const rocketName = rocketObj?.name || 'Unknown Vehicle';
+  
+  // Get launchpad data (either from populated object or default)
+  const launchpadObj = typeof launch.launchpad === 'object' ? launch.launchpad as Launchpad : null;
+  const launchpadName = launchpadObj?.name || 'Unknown Launchpad';
+  const locationName = launchpadObj?.locality && launchpadObj?.region 
+    ? `${launchpadObj.locality}, ${launchpadObj.region}`
+    : launchpadObj?.locality || launchpadObj?.region || 'Unknown Location';
+  
+  // Get company (provider) name
+  const providerName = rocketObj?.company || 'Unknown Provider';
 
   const cardClasses = `
     ${isActive 
@@ -36,33 +42,41 @@ const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
     border ${isActive ? 'border-blue-500 shadow-blue-500/30 shadow-lg' : 'border-gray-700'}
   `;
 
-  // Use date_str for display if available and specific dates aren't, otherwise format the specific date
+  // Format the date based on precision
   let formattedDate: string;
-  if (launch.win_open || launch.t0) {
-    // If we have a precise ISO date string
-    const preciseDate = launch.win_open || launch.t0;
-    formattedDate = new Date(preciseDate!).toLocaleString(undefined, {
-      year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC'
+  
+  if (launch.date_precision === 'hour' || launch.date_precision === 'day') {
+    // Full date with time for high precision dates
+    formattedDate = new Date(launch.date_utc).toLocaleString(undefined, {
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit',
+      timeZone: 'UTC'
+    }) + ' UTC';
+  } else if (launch.date_precision === 'month') {
+    // Just month and year for month precision
+    formattedDate = new Date(launch.date_utc).toLocaleString(undefined, {
+      year: 'numeric', 
+      month: 'long'
     });
-  } else if (launch.sort_date) {
-    // If we only have the sort_date timestamp string
-    try {
-      const timestamp = parseInt(launch.sort_date, 10);
-      if (!isNaN(timestamp)) {
-        formattedDate = new Date(timestamp * 1000).toLocaleString(undefined, {
-          year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC'
-        });
-      } else {
-        // Fallback if sort_date is not a valid number string
-        formattedDate = launch.date_str || 'Date TBC';
-      }
-    } catch (e) {
-      // Fallback in case of parsing error
-      formattedDate = launch.date_str || 'Date TBC';
-    }
+  } else if (launch.date_precision === 'quarter' || launch.date_precision === 'half') {
+    // Quarter or half-year precision
+    const date = new Date(launch.date_utc);
+    const quarter = Math.floor(date.getMonth() / 3) + 1;
+    formattedDate = `Q${quarter} ${date.getFullYear()}`;
+  } else if (launch.date_precision === 'year') {
+    // Just the year
+    formattedDate = new Date(launch.date_utc).getFullYear().toString();
   } else {
-    // Fallback to the user-friendly string if no other date is available
-    formattedDate = launch.date_str || 'Date TBC';
+    // Fallback for unknown precision
+    formattedDate = 'Date TBD';
+  }
+
+  // Add a "NET" (No Earlier Than) prefix for dates that aren't firm
+  if (launch.tbd || launch.net) {
+    formattedDate = `NET ${formattedDate}`;
   }
 
   return (
@@ -94,9 +108,9 @@ const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
           <FaCalendarAlt className="mr-2 w-4 h-4 flex-shrink-0" />
           <span>{formattedDate}</span>
         </p>
-        <p className="text-xs sm:text-sm text-gray-300 mb-2 flex items-center" title={vehicleName}>
+        <p className="text-xs sm:text-sm text-gray-300 mb-2 flex items-center" title={rocketName}>
           <FaRocket className="mr-2 w-4 h-4 flex-shrink-0" />
-          <span>{vehicleName}</span>
+          <span>{rocketName}</span>
         </p>
       </div>
 
@@ -106,9 +120,12 @@ const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
           <FaBuilding className="mr-2 w-4 h-4 flex-shrink-0" />
           <span>{providerName}</span>
         </p>
-        <p className="truncate flex items-center" title={`${locationName}${padName ? ` (${padName})` : ''}`}>
+        <p className="truncate flex items-center" title={`${locationName}${launchpadName ? ` (${launchpadName})` : ''}`}>
           <FaMapMarkerAlt className="mr-2 w-4 h-4 flex-shrink-0" />
-          <span>{locationName}{padName ? ` (${padName})` : ''}</span>
+          <span>
+            {locationName}
+            {launchpadName && launchpadName !== locationName ? ` (${launchpadName})` : ''}
+          </span>
         </p>
       </div>
     </div>

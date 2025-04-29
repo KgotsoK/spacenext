@@ -81,50 +81,100 @@ export interface LaunchAPIResponse {
   // Potentially other metadata fields
 }
 
-export interface Launch {
-  id: number;
-  cospar_id: string | null;
-  sort_date: string; // Can be parsed as number (Unix timestamp)
-  name: string;
-  provider: LaunchProvider;
-  vehicle: LaunchVehicle;
-  pad: LaunchPad;
-  missions: LaunchMission[];
-  mission_description: string | null;
-  launch_description: string;
-  win_open: string | null; // ISO 8601 Date string or null
-  t0: string | null; // ISO 8601 Date string or null
-  win_close: string | null;
-  est_date: EstimatedDate;
-  date_str: string; // User-friendly date string
-  tags: LaunchTag[];
-  slug: string;
-  weather_summary: string | null;
-  weather_temp: number | null;
-  weather_condition: string | null;
-  weather_wind_mph: number | null;
-  weather_icon: string | null;
-  weather_updated: string | null;
-  quicktext: string;
-  media: any[]; // Define more specific type if structure is known
-  result: number | null; // -1 for scheduled, potentially others?
-  suborbital: boolean;
-  modified: string; // ISO 8601 Date string
-  // Note: 'links' was not present in the sample, add if needed
-  // links?: { patch?: { small?: string; large?: string } };
-  links?: { 
-    patch?: { 
-      small?: string | null;
-      large?: string | null;
-    };
-    // Add other link types if they exist (e.g., webcast, article)
-  };
+// Based on SpaceX API v5 structure
+
+export interface Core {
+  core: string | null;
+  flight: number | null;
+  gridfins: boolean | null;
+  legs: boolean | null;
+  reused: boolean | null;
+  landing_attempt: boolean | null;
+  landing_success: boolean | null;
+  landing_type: string | null;
+  landpad: string | null;
 }
 
-// If the API response is structured like the SpaceX API v5 'query' endpoint:
+export interface LaunchLinks {
+  patch: {
+    small: string | null;
+    large: string | null;
+  };
+  reddit: {
+    campaign: string | null;
+    launch: string | null;
+    media: string | null;
+    recovery: string | null;
+  };
+  flickr: {
+    small: string[];
+    original: string[];
+  };
+  presskit: string | null;
+  webcast: string | null;
+  youtube_id: string | null;
+  article: string | null;
+  wikipedia: string | null;
+}
+
+export interface Fairings {
+  reused: boolean | null;
+  recovery_attempt: boolean | null;
+  recovered: boolean | null;
+  ships: string[];
+}
+
+export interface Rocket {
+  name: string;
+  type: string;
+  company: string;
+  wikipedia: string;
+  description: string;
+  id: string;
+}
+
+export interface Launchpad {
+  name: string;
+  full_name: string;
+  locality: string;
+  region: string;
+  timezone: string;
+  latitude: number;
+  longitude: number;
+  status: string;
+  id: string;
+}
+
+// Main Launch interface based on SpaceX API v5
+export interface Launch {
+  id: string;
+  flight_number: number;
+  name: string;
+  date_utc: string;
+  date_unix: number;
+  date_local: string;
+  date_precision: string; // 'half', 'quarter', 'year', 'month', 'day', 'hour'
+  static_fire_date_utc: string | null;
+  static_fire_date_unix: number | null;
+  tbd: boolean;
+  net: boolean;
+  window: number | null;
+  rocket: string | Rocket; // ID string when not populated, full object when populated
+  launchpad: string | Launchpad; // ID string when not populated, full object when populated
+  success: boolean | null;
+  details: string | null;
+  upcoming: boolean;
+  cores: Core[];
+  fairings: Fairings | null;
+  links: LaunchLinks;
+  auto_update: boolean;
+}
+
+// API response from the query endpoint
 export interface LaunchApiResponse {
   docs: Launch[];
   totalDocs: number;
+  offset: number;
   limit: number;
   totalPages: number;
   page: number;

@@ -22,10 +22,12 @@ export const getUpcomingLaunches = async (
       options: {
         limit: limit,
         sort: {
-          flight_number: "asc", // Sort by flight number ascending
+          date_unix: "asc", // Sort by date ascending
         },
-        pagination: true, // Request paginated response
-        populate: ["rocket"], // Include full rocket details
+        populate: [
+          "rocket",
+          "launchpad"
+        ],
       },
     }),
   });

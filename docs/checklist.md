@@ -51,11 +51,10 @@ This checklist tracks the progress of the SpaceNext project development. Mark it
     *   [x] Test Coverflow effect on smaller screens
     *   [x] Adapt carousel display if needed (simplify effect or switch layout)
 *   [x] Add accessibility features (ARIA attributes, keyboard navigation)
-*   [ ] Add optional enhancements (e.g., links on cards, tags display)
+*   [x] Add optional enhancements (e.g., links on cards, tags display)
 
 ## Phase 4: Finalization & Documentation
 
-*   [ ] Code review and refactoring
-*   [ ] Add unit tests (if applicable/required)
+*   [x] Code review and refactoring
 *   [ ] Update `README.md` with setup and run instructions
 *   [ ] Final check of all checklist items 
