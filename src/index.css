@@ -2,4 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global styles */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-gradient-to-b from-gray-900 to-black min-h-screen text-white font-sans;
+  overflow-x: hidden;
+}
+
+/* Custom classes */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* 3D effect support */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* For mobile swipe */
+@media (max-width: 640px) {
+  .carousel-container {
+    touch-action: pan-y;
+    user-select: none;
+  }
+}
+
 /* Removed default Vite styles below this line */
