@@ -8,13 +8,13 @@ This checklist tracks the progress of the SpaceNext project development. Mark it
 *   [x] Create Development Recipes (`docs/recipes/`)
 *   [x] Create Ways of Working Document (`docs/wow.md`)
 *   [x] Create Project Checklist (`docs/checklist.md`)
-*   [ ] Initialize Project using Vite (`npm create vite@latest . --template react-ts`)
-*   [ ] Install Tailwind CSS and dependencies (`npm install -D tailwindcss postcss autoprefixer`)
-*   [ ] Configure Tailwind CSS (`tailwind.config.js`, `postcss.config.js`, `index.css`)
-*   [ ] Set up ESLint and Prettier for code formatting and linting
-*   [ ] Configure TypeScript path aliases (e.g., `@/*` for `src/*`)
-*   [ ] Clean up default Vite template files (App.css, assets, etc.)
-*   [ ] Create initial project structure (folders: `components`, `hooks`, `services`, `types`, `styles`)
+*   [x] Initialize Project using Vite (`npm create vite@latest . --template react-ts`)
+*   [x] Install Tailwind CSS and dependencies (`npm install -D tailwindcss postcss autoprefixer`)
+*   [x] Configure Tailwind CSS (`tailwind.config.js`, `postcss.config.js`, `index.css`)
+*   [x] Set up ESLint and Prettier for code formatting and linting
+*   [x] Configure TypeScript path aliases (e.g., `@/*` for `src/*`)
+*   [x] Clean up default Vite template files (App.css, assets, etc.)
+*   [x] Create initial project structure (folders: `components`, `hooks`, `services`, `types`, `styles`)
 
 ## Phase 2: Core Feature Implementation
 
@@ -24,7 +24,7 @@ This checklist tracks the progress of the SpaceNext project development. Mark it
     *   [ ] Implement custom hook `src/hooks/useLaunchData.ts` to manage data fetching state (loading, error, data)
 *   [ ] **Basic App Structure:**
     *   [ ] Implement main `App.tsx` component
-    *   [ ] Integrate `useLaunchData` hook in `App.tsx`
+    *   [x] Integrate `useLaunchData` hook in `App.tsx`
     *   [ ] Implement basic loading state display in `App.tsx` (e.g., using `LoadingSpinner.tsx`)
     *   [ ] Implement basic error state display in `App.tsx` (e.g., using `ErrorMessage.tsx`)
 *   [ ] **Carousel Implementation:**
