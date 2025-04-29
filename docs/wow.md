@@ -24,7 +24,40 @@ The following documents form the foundation of our development process:
     *   Provides a detailed, trackable list of setup tasks, features to implement, and polishing steps.
     *   Use this checklist to monitor progress and ensure all requirements are met. AI agents should mark items as complete (`[x]`) as they are finished.
 
-## 3. Living Documents
+## 3. AI Collaboration Guidelines
+
+When working with AI assistants on this project, the following guidelines **must** be strictly followed:
+
+*   **Exploration Before Action:**
+    *   AI agents **must** thoroughly explore the project structure and read all relevant files before making any suggestions or changes.
+    *   This includes reviewing the specification, relevant components, and existing implementation patterns.
+    *   Never make assumptions about project structure, naming conventions, or implementation details.
+
+*   **Question-driven Approach:**
+    *   When faced with uncertainty, AI agents should ask specific questions to the user rather than making assumptions.
+    *   Questions should be precise and aimed at clarifying requirements, confirming implementation approaches, or resolving ambiguities.
+
+*   **Action Plan Requirement:**
+    *   Before implementing any significant change, AI agents **must** provide a clear action plan outlining:
+        *   The specific files to be created or modified
+        *   The key changes to be made
+        *   Any dependencies or considerations that might impact the implementation
+    *   This plan must be confirmed by the user before proceeding with implementation.
+
+*   **User Confirmation:**
+    *   This is not a "YOLO" development environment. Stability and correctness are prioritized over speed.
+    *   User confirmation is required before proceeding with any significant implementation or change.
+    *   Breaking changes especially require explicit approval.
+
+*   **Strict Adherence to Documentation:**
+    *   Specifications and recipes **must** be followed strictly.
+    *   Any deviation from documented standards requires explicit user approval and should be reflected in updated documentation.
+
+*   **Incremental Changes:**
+    *   Implement changes in smaller, logical increments rather than large, monolithic changes.
+    *   This allows for easier review, testing, and rollback if necessary.
+
+## 4. Living Documents
 
 **Crucially, this WoW document, the main specification, the recipes, and the checklist are *living documents*.**
 
