@@ -19,33 +19,33 @@ This checklist tracks the progress of the SpaceNext project development. Mark it
 ## Phase 2: Core Feature Implementation
 
 *   [ ] **Data Fetching & Types:**
-    *   [ ] Define TypeScript interfaces for API response in `src/types/launchTypes.ts`
+    *   [x] Define TypeScript interfaces for API response in `src/types/launchTypes.ts`
     *   [ ] Implement API service function in `src/services/launchService.ts` to fetch next 5 launches
     *   [ ] Implement custom hook `src/hooks/useLaunchData.ts` to manage data fetching state (loading, error, data)
 *   [ ] **Basic App Structure:**
-    *   [ ] Implement main `App.tsx` component
+    *   [x] Implement main `App.tsx` component
     *   [x] Integrate `useLaunchData` hook in `App.tsx`
-    *   [ ] Implement basic loading state display in `App.tsx` (e.g., using `LoadingSpinner.tsx`)
-    *   [ ] Implement basic error state display in `App.tsx` (e.g., using `ErrorMessage.tsx`)
+    *   [x] Implement basic loading state display in `App.tsx` (e.g., using `LoadingSpinner.tsx`)
+    *   [x] Implement basic error state display in `App.tsx` (e.g., using `ErrorMessage.tsx`)
 *   [ ] **Carousel Implementation:**
-    *   [ ] Create `LaunchCarousel.tsx` component
-    *   [ ] Create `LaunchCard.tsx` component
-    *   [ ] Create `CarouselNav.tsx` component (for Next/Prev buttons)
-    *   [ ] Pass launch data from `App.tsx` to `LaunchCarousel.tsx`
-    *   [ ] Implement basic rendering of launch cards in `LaunchCarousel.tsx` using `LaunchCard.tsx`
-    *   [ ] Style `LaunchCard.tsx` using Tailwind CSS to display required launch info
-    *   [ ] Implement state management for the active carousel index in `LaunchCarousel.tsx`
-    *   [ ] Implement navigation logic (Next/Prev button clicks) in `LaunchCarousel.tsx` / `CarouselNav.tsx`
+    *   [x] Create `LaunchCarousel.tsx` component
+    *   [x] Create `LaunchCard.tsx` component
+    *   [x] Create `CarouselNav.tsx` component (for Next/Prev buttons)
+    *   [x] Pass launch data from `App.tsx` to `LaunchCarousel.tsx`
+    *   [x] Implement basic rendering of launch cards in `LaunchCarousel.tsx` using `LaunchCard.tsx`
+    *   [x] Style `LaunchCard.tsx` using Tailwind CSS to display required launch info
+    *   [x] Implement state management for the active carousel index in `LaunchCarousel.tsx`
+    *   [x] Implement navigation logic (Next/Prev button clicks) in `LaunchCarousel.tsx` / `CarouselNav.tsx`
 *   [ ] **Coverflow Effect:**
-    *   [ ] Apply CSS perspective and transform-style to the carousel container
-    *   [ ] Implement dynamic CSS transforms (`translateX`, `scale`, `rotateY`) and `z-index` on `LaunchCard.tsx` based on relative position to the active index
-    *   [ ] Add smooth CSS transitions for carousel navigation
-    *   [ ] Refine animation timing and easing
+    *   [x] Apply CSS perspective and transform-style to the carousel container
+    *   [x] Implement dynamic CSS transforms (`translateX`, `scale`, `rotateY`) and `z-index` on `LaunchCard.tsx` based on relative position to the active index
+    *   [x] Add smooth CSS transitions for carousel navigation
+    *   [x] Refine animation timing and easing
 
 ## Phase 3: Styling & Polish
 
-*   [ ] Add application header/title
-*   [ ] Refine overall page layout and centering using Tailwind
+*   [x] Add application header/title
+*   [x] Refine overall page layout and centering using Tailwind
 *   [ ] Apply consistent color scheme and typography via Tailwind config/classes
 *   [ ] Implement responsive design adjustments for tablet and mobile
     *   [ ] Test Coverflow effect on smaller screens

@@ -4,31 +4,39 @@
 export interface LaunchProvider {
   id: number;
   name: string;
+  slug: string;
   // Add other provider fields if needed
 }
 
 export interface LaunchVehicle {
   id: number;
   name: string;
+  company_id: number;
+  slug: string;
   // Add other vehicle fields if needed
 }
 
-export interface LaunchPadLocation {
+export interface LaunchLocation {
   id: number;
   name: string;
+  state: string | null;
+  statename: string | null;
+  country: string;
+  slug: string;
   // Add other location fields if needed
 }
 
 export interface LaunchPad {
   id: number;
   name: string;
-  location: LaunchPadLocation;
+  location: LaunchLocation;
   // Add other pad fields if needed
 }
 
 export interface LaunchMission {
   id: number;
   name: string;
+  description: string | null;
   // Add other mission fields if needed
 }
 
@@ -36,6 +44,13 @@ export interface LaunchTag {
   id: number;
   text: string;
   // Add other tag fields if needed
+}
+
+export interface EstimatedDate {
+  month: number | null;
+  day: number | null;
+  year: number | null;
+  quarter: number | null;
 }
 
 // Main Launch Data structure
@@ -67,23 +82,43 @@ export interface LaunchAPIResponse {
 }
 
 export interface Launch {
-  id: string;
+  id: number;
+  cospar_id: string | null;
+  sort_date: string; // Can be parsed as number (Unix timestamp)
   name: string;
-  date_utc: string; // Or Date if preferred
-  details: string | null;
-  links: {
-    patch: {
-      small: string | null;
-      large: string | null;
+  provider: LaunchProvider;
+  vehicle: LaunchVehicle;
+  pad: LaunchPad;
+  missions: LaunchMission[];
+  mission_description: string | null;
+  launch_description: string;
+  win_open: string | null; // ISO 8601 Date string or null
+  t0: string | null; // ISO 8601 Date string or null
+  win_close: string | null;
+  est_date: EstimatedDate;
+  date_str: string; // User-friendly date string
+  tags: LaunchTag[];
+  slug: string;
+  weather_summary: string | null;
+  weather_temp: number | null;
+  weather_condition: string | null;
+  weather_wind_mph: number | null;
+  weather_icon: string | null;
+  weather_updated: string | null;
+  quicktext: string;
+  media: any[]; // Define more specific type if structure is known
+  result: number | null; // -1 for scheduled, potentially others?
+  suborbital: boolean;
+  modified: string; // ISO 8601 Date string
+  // Note: 'links' was not present in the sample, add if needed
+  // links?: { patch?: { small?: string; large?: string } };
+  links?: { 
+    patch?: { 
+      small?: string | null;
+      large?: string | null;
     };
-    webcast: string | null;
+    // Add other link types if they exist (e.g., webcast, article)
   };
-  rocket: { // Assuming we might need rocket info
-    name: string;
-  } | string; // Sometimes the API returns just the rocket ID string
-  success: boolean | null;
-  upcoming: boolean;
-  // Add other relevant fields as needed based on actual API response
 }
 
 // If the API response is structured like the SpaceX API v5 'query' endpoint:
