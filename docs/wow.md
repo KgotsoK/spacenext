@@ -155,8 +155,8 @@ Once the implementation plan is approved by the user, the agent will:
 
 ### 5.7. CI/CD and Notification
 
-1. The agent will run the CI job to deploy changes to the testing environment.
-2. Using the Teams MCP tool, the agent will send a notification to the "Daily SU" channel:
+1. The agent will run the CI job to deploy changes to the testing environment using the Github MCP tool.
+2. Using the Microsoft Teams MCP tool, the agent will send a notification to the "Daily SU" channel:
    * Informing testers that changes are ready for testing
    * Providing information on how to access the testing environment
    * Including a link to the Pull Request 
