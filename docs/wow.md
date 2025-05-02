@@ -155,8 +155,12 @@ Once the implementation plan is approved by the user, the agent will:
 
 ### 5.7. CI/CD and Notification
 
-1. The agent will run the CI job to deploy changes to the testing environment using the Github MCP tool.
+1. The agent will run the CI job to deploy changes to the testing environment using the Github MCP tool:
+   * The agent must trigger the `deploy-spacenow.yml` workflow in the `.github/workflows` directory
+   * For the test environment, this workflow deploys to a preview environment when targeting the `develop` branch
+
 2. Using the Microsoft Teams MCP tool, the agent will send a notification to the "Daily SU" channel:
    * Informing testers that changes are ready for testing
-   * Providing information on how to access the testing environment
-   * Including a link to the Pull Request 
+   * Providing information on how to access the testing environment (using the preview URL from the GitHub Pages workflow)
+   * Including a link to the Pull Request
+   * Sample message format: "SpaceNext PR #123 has been deployed to the testing environment. Preview URL: [URL]. Please test and provide feedback." 
