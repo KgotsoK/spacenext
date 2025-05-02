@@ -70,3 +70,93 @@ As the SpaceNext project evolves:
 It is the collective responsibility of the development team (including AI collaborators when applicable) to ensure these documents are kept **accurate and up-to-date**. When a change impacting the spec, checklist, or a recipe is made, the corresponding documentation **must be updated** as part of that change.
 
 Referencing outdated documentation can lead to inconsistencies and errors. Always ensure you are referring to the latest versions available in the repository. 
+
+## 5. Working on Tickets with AI
+
+When working on tickets with AI assistance, the following step-by-step workflow **must** be followed without deviation:
+
+### 5.1. Ticket Selection
+
+1. The AI agent will use the GitHub MCP tool to fetch a list of open issues from the repository.
+2. The agent will present this list to the user and ask which issue to work on.
+3. The user will select an issue number or provide the full issue details.
+
+### 5.2. Architecture Phase
+
+**CRITICAL: No implementation should occur during this phase.**
+
+1. The AI agent will enter "architect mode" and:
+   * Review the issue content in detail
+   * Explore the project structure to understand the context
+   * Examine related files and components
+   * Research any unfamiliar concepts or requirements
+
+2. The agent will formulate a detailed plan including:
+   * Files to be created or modified
+   * Technical approach for implementation
+   * Impact analysis of the proposed changes
+   * Any dependencies or potential challenges
+
+3. **THE AGENT MUST NOT IMPLEMENT ANYTHING AT THIS STAGE.**
+
+4. The agent will present the plan to the user for review and approval.
+
+5. The user and agent will discuss the plan, potentially making revisions.
+
+6. **The agent must not use any edit_file tools until explicitly authorized by the user.**
+
+### 5.3. Git Workflow
+
+Once the implementation plan is approved by the user, the agent will:
+
+1. Switch to the `develop` branch:
+   ```
+   git checkout develop
+   ```
+
+2. Fetch the latest changes:
+   ```
+   git pull origin develop
+   ```
+
+3. Create a new branch with the naming convention `MII-XXXX`, where XXXX is the issue number:
+   ```
+   git checkout -b MII-2345
+   ```
+
+4. **Only after this git setup is complete** may the agent proceed with implementation.
+
+### 5.4. Implementation Phase
+
+1. The agent will implement the previously agreed-upon approach.
+2. All changes must follow project coding standards and conventions.
+3. The agent should make incremental, logical commits if the implementation is complex.
+
+### 5.5. Testing and Iteration
+
+1. Once implementation is complete, the agent will ask the user to test the changes.
+2. Based on feedback, the agent will make necessary adjustments.
+3. This test-feedback-adjust cycle continues until the user is satisfied.
+
+### 5.6. Code Submission
+
+1. The agent will commit the code with an appropriate message following the format:
+   ```
+   MII-XXXX: Brief description of the changes
+   ```
+   Example: `MII-2345: Fixed bug where drop down menu never closes once opened.`
+
+2. The agent will push the branch to the remote repository:
+   ```
+   git push origin MII-2345
+   ```
+
+3. The agent will create a Pull Request to merge into `develop` using the GitHub MCP tool.
+
+### 5.7. CI/CD and Notification
+
+1. The agent will run the CI job to deploy changes to the testing environment.
+2. Using the Teams MCP tool, the agent will send a notification to the "Daily SU" channel:
+   * Informing testers that changes are ready for testing
+   * Providing information on how to access the testing environment
+   * Including a link to the Pull Request 
