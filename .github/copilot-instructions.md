@@ -22,10 +22,6 @@ The following documents form the foundation of our development process:
   - This directory contains step-by-step guides for common development tasks (e.g., creating components, adding service functions, defining types).
   - These recipes ensure consistency in _how_ specific, recurring tasks are performed according to project standards.
 
-- **Project Checklist (`docs/checklist.md`):**
-  - Provides a detailed, trackable list of setup tasks, features to implement, and polishing steps.
-  - Use this checklist to monitor progress and ensure all requirements are met. AI agents should mark items as complete (`[x]`) as they are finished.
-
 ## 3. AI Collaboration Guidelines
 
 When working with AI assistants on this project, the following guidelines **must** be strictly followed:
@@ -35,6 +31,7 @@ When working with AI assistants on this project, the following guidelines **must
   - AI agents **must** thoroughly explore the project structure and read all relevant files before making any suggestions or changes.
   - This includes reviewing the specification, relevant components, and existing implementation patterns.
   - Never make assumptions about project structure, naming conventions, or implementation details.
+  - When looking for new issues to work on, the agent must list them from Github. Once one is picked the agent must assign it to the user.
 
 - **Question-driven Approach:**
 
@@ -66,15 +63,15 @@ When working with AI assistants on this project, the following guidelines **must
 
 ## 4. Living Documents
 
-**Crucially, this WoW document, the main specification, the recipes, and the checklist are _living documents_.**
+**Crucially, this WoW document, the main specification and the recipes are _living documents_.**
 
 As the SpaceNext project evolves:
 
-- New features may be added or existing ones modified (requiring updates to `main-spec.md` and `checklist.md`).
+- New features may be added or existing ones modified (requiring updates to `main-spec.md`).
 - Development processes or conventions might change (requiring updates to relevant recipes in `docs/recipes/`).
 - The overall approach or tooling might shift (requiring updates to this `copilot-instructions.md` file and potentially the spec/recipes).
 
-It is the collective responsibility of the development team (including AI collaborators when applicable) to ensure these documents are kept **accurate and up-to-date**. When a change impacting the spec, checklist, or a recipe is made, the corresponding documentation **must be updated** as part of that change.
+It is the collective responsibility of the development team (including AI collaborators when applicable) to ensure these documents are kept **accurate and up-to-date**. When a change impacting the spec or a recipe is made, the corresponding documentation **must be updated** as part of that change. If a new recipe needs to be written it must be created and referenced in the main spec.
 
 Referencing outdated documentation can lead to inconsistencies and errors. Always ensure you are referring to the latest versions available in the repository.
 
