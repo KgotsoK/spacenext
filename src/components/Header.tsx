@@ -5,7 +5,7 @@ const Header: React.FC = () => {
     <header className="w-full py-6">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl md:text-4xl font-bold text-center tracking-wider">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 shimmer-effect">
             SpaceNext
           </span>{" "}
           <span className="text-white">Launch Tracker</span>
@@ -18,4 +18,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header; 
+export default Header;
