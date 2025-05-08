@@ -4,6 +4,6 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/spacenow/',
+  base: '/spacenext/',
   plugins: [react(), tsconfigPaths()],
 })

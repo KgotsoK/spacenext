@@ -5,14 +5,17 @@ A sleek, modern web application that displays upcoming space launches using Spac
 ## Features
 
 - 🚀 Live tracking of upcoming SpaceX launches
-- ✨ Visually striking 3D coverflow carousel 
+- ✨ Visually striking 3D coverflow carousel
 - 📱 Fully responsive design (mobile, tablet, desktop)
 - 🎯 Detailed mission information for each launch
 - 🔄 Real-time data fetching from SpaceX API v5
 
-## Demo
+## Note on MCP Servers
 
-![SpaceNext Demo](screenshot.png)
+Use the homebrew binary instead of docker command for github mcp. This allows the binary to run locally and avoud certificate issues.
+https://github.com/github/github-mcp-server/issues/157
+
+`brew install github-mcp-server`
 
 ## Tech Stack
 
@@ -32,12 +35,14 @@ A sleek, modern web application that displays upcoming space launches using Spac
 ### Installation
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/yourusername/spacenext.git
 cd spacenext
 ```
 
 2. Install dependencies
+
 ```bash
 npm install
 # or with yarn
@@ -45,6 +50,7 @@ yarn install
 ```
 
 3. Start the development server
+
 ```bash
 npm run dev
 # or with yarn
