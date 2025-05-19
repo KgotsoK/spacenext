@@ -1,0 +1,146 @@
+# JADE Agent - KgotsoK/spacenext Repository Context
+
+## 1. Project Overview
+- **Application Name:** spacenext
+- **Application Purpose:** A sleek, modern web application to display upcoming space launches using SpaceX's public API. It showcases missions with key details via a 3D coverflow carousel. It aims to provide an engaging way for space enthusiasts to track upcoming SpaceX launches.
+- **Tech Stack:**
+    - Frontend Framework: React 19
+    - Language: TypeScript (~5.7.2)
+    - Build Tool: Vite (^6.3.1)
+    - UI Styling: Tailwind CSS (^3.4.1)
+    - State Management: Primarily uses local component state and custom React Hooks (e.g., `useState`, `useEffect`). No global state management library like Redux or Zustand is apparent. Data fetching and related state are encapsulated within custom hooks like `useLaunchData`.
+- **Key Libraries:**
+    - `react-icons`: For icons.
+- **Architecture:**
+    - Frontend application served via `index.html`.
+    - Source code primarily in `src/`.
+    - Public assets in `public/`.
+    - The project follows a standard React application structure with key directories:
+        - `src/components/`: Contains UI components. Complex components like `LaunchCarousel` are grouped into subdirectories.
+        - `src/hooks/`: For custom React hooks like `useLaunchData.ts`.
+        - `src/services/`: For API interaction logic, e.g., `launchService.ts`.
+        - `src/types/`: For TypeScript type definitions, e.g., `launchTypes.ts`.
+        - `src/assets/`: For static assets (images, fonts).
+        - `src/styles/`: May contain global styles (alongside `src/index.css`).
+        - `src/App.tsx` is the main application component and `src/main.tsx` is the entry point.
+    - No specific high-level architectural pattern like Atomic Design is explicitly mentioned, but the structure promotes separation of concerns.
+
+## 2. Development Standards & Conventions
+- **Branching Strategy:**
+    - `main` is the primary integration branch.
+    - Feature branches: `feature/TICKET_ID-short-description` (e.g., `feature/SPN-123-user-login-form`). TICKET_ID should be the GitHub issue number.
+    - Bugfix branches: `bugfix/TICKET_ID-short-description` (e.g., `bugfix/SPN-456-fix-button-alignment`).
+- **Commit Messages:**
+    - **YOU MUST** follow Conventional Commits standard: `<type>(<scope>): <subject> (Closes #<TICKET_ID>)`.
+    - Example: `feat(auth): implement password reset form (Closes #SPN-123)`
+    - Example: `fix(ui): correct button alignment on profile page (Closes #SPN-456)`
+    - `<type>` can be: `feat`, `fix`, `build`, `chore`, `ci`, `docs`, `perf`, `refactor`, `revert`, `style`, `test`.
+    - `<scope>` is optional and should be a short identifier of the part of the codebase (e.g., `auth`, `ui`, `vite-config`).
+- **Pull Requests (PRs):**
+    - **YOU MUST** target the `main` branch for all PRs.
+    - PR Title: `feat: [Brief Description of Feature/Fix] (Closes #SPN-123)`
+    - PR Body:
+        - Summary of changes made.
+        - How to test the changes.
+        - Link to the GitHub issue (e.g., "Addresses #SPN-123").
+    - **IMPORTANT:** Ensure all checks pass before requesting review:
+        - Linting: `npm run lint`
+        - TypeScript compilation: Part of `npm run build` (`tsc -b`)
+        - Tests: `npm run test` (if test script exists and is configured)
+        - Build: `npm run build`
+- **Code Style & Formatting:**
+    - **YOU MUST** use Prettier for code formatting. Run `npm run format` before committing.
+    - **YOU MUST** adhere to ESLint rules. Run `npm run lint` to check. Resolve all errors and warnings.
+    - Key ESLint configurations: `.eslintrc.cjs`, `eslint.config.js`.
+    - Key Prettier configuration: `.prettierrc.cjs`.
+    - TypeScript is the primary language. Follow idiomatic TypeScript practices.
+    - Favor ES Modules (`import`/`export`) over CommonJS.
+- **Testing:**
+    - **Strategy:** Unit tests for components and potentially service functions are "optional but recommended" as per project recipes (e.g., `docs/recipes/recipe-create-component.md`). The primary documented focus is on unit testing.
+    - **Frameworks/Libraries:** React Testing Library is a suggested library for component testing. The specific test runner (e.g., Jest, Vitest) is not explicitly stated in `main-spec.md` or recipes.
+    - **Test Files:** Expected to be named `ComponentName.test.tsx` and collocated with the component source file.
+    - **Running Tests:** The command `npm run test` is listed in the main `README.md` and `package.json`. **YOU MUST** assume this is the correct command to execute tests. If this command fails or no tests run, you should note this.
+    - **Test Creation:** If you create new components or add significant new functionality, **YOU SHOULD** attempt to add corresponding unit tests following the established patterns if they exist, or using React Testing Library if creating new test files.
+    - **Coverage:** No specific test coverage targets are mentioned in the available documentation.
+    - **[User: Please confirm the primary test runner (e.g., Vitest, Jest) used by `npm run test`. If `npm run test` is not fully configured or if there are other types of tests (integration, E2E) or specific coverage expectations, please provide details.]**
+
+## 3. JADE-Specific Instructions & Tools
+- **Consult Project Documentation:**
+    - For detailed project goals, features, overall architecture, component structure, and coding guidelines, **YOU MUST** refer to `docs/specs/main-spec.md`.
+    - For performing common development tasks like creating components, services, or types, **YOU MUST** consult and follow the step-by-step guides in the `docs/recipes/` directory.
+- **Primary Goal:** To autonomously implement features and fix bugs based on GitHub issues, and to address PR feedback within the `KgotsoK/spacenext` repository.
+- **Identifying Work - New Tickets Workflow:**
+    - Your task is to find an unassigned, open GitHub issue in the `KgotsoK/spacenext` repository that does not yet have an open Pull Request associated with it.
+    - Use `gh search issues --repo KgotsoK/spacenext "is:open no:assignee -linked:pr" --sort created --order asc` or similar `gh` commands to find such an issue.
+    - Prioritize older tickets if multiple candidates exist.
+    - If no such ticket is found, you should explicitly state this fact in your output and conclude this workflow for the current cycle.
+- **Identifying Work - PR Feedback Workflow:**
+    - Your task is to find an open Pull Request in the `KgotsoK/spacenext` repository that was authored by you. You can identify your PRs by checking the author against the `JADE_GITHUB_USERNAME` environment variable (which contains your GitHub username).
+    - The PR must have new comments from other users that you have not yet addressed.
+    - Use `gh pr list --repo KgotsoK/spacenext --author "@me" --state open --json number,title,updatedAt,comments` and then inspect comments for each PR (e.g., `gh pr view PR_NUMBER --comments`).
+    - Focus on PRs with the most recent unaddressed feedback.
+    - If no such PR with actionable feedback is found, you should explicitly state this fact in your output and conclude this workflow for the current cycle.
+- **GitHub Operations:**
+    - **YOU MUST** use the `gh` CLI for all GitHub interactions (e.g., `gh issue view <ID>`, `gh pr create`, `gh pr checkout <ID>`, `gh pr comment <ID>`).
+    - The `GITHUB_TOKEN` environment variable will be set for `gh` authentication.
+    - The `JADE_GITHUB_USERNAME` environment variable contains your GitHub username.
+- **Claude Code Configuration:**
+    - You are running via the Claude Code CLI.
+    - Use `--working-dir /app/repo` (which is the `spacenext` root).
+    - Allowed tools for headless execution: `Edit`, `Bash(git:*)`, `Bash(gh:*)`, `Bash(npm:*)`.
+- **Self-Correction & Error Handling:**
+    - If a command (e.g., `npm run build`, `npm run lint`) fails, **YOU MUST** analyze the error output.
+    - **YOU MUST** attempt to fix the errors. This might involve code changes, dependency updates (if clearly indicated and safe), or re-running commands.
+    - Document your attempts and findings in commit messages or PR comments if the fix is non-trivial.
+- **Slash Command Usage (Invoked by Orchestrator):**
+    - You will be invoked with general project-level slash commands. The specific item to work on (ticket or PR) will NOT be provided as an argument; your first step within the slash command logic is to identify it based on the "Identifying Work" guidelines above.
+    - `/project:processNewTicket`
+    - `/project:addressPrFeedback`
+- **Output Expectations for Slash Commands:**
+    - For `/project:processNewTicket`: After successfully creating a PR (or determining no suitable ticket exists), ensure your output clearly states the outcome. If a PR is created, **YOU MUST** output the full URL of the created Pull Request to STDOUT as the last line. Example: `https://github.com/KgotsoK/spacenext/pull/123`. If no ticket was found/processed, state that clearly.
+    - For `/project:addressPrFeedback`: After successfully pushing changes and commenting on the PR (or determining no suitable PR/feedback exists), ensure your output clearly states the outcome. If no PR/feedback was processed, state that clearly.
+- **Notifications:** The orchestration script handles email notifications *after* you successfully complete tasks (e.g., PR creation). You do not need to send emails.
+
+## 4. Common Commands for `spacenext` (Confirm paths and exact commands)
+- Install dependencies: `npm install`
+- Start local dev server: `npm run dev`
+- Build project: `npm run build` (This runs `tsc -b && vite build`)
+- Lint project: `npm run lint`
+- Format project: `npm run format`
+- Preview build: `npm run preview`
+- Run tests: `npm run test` (YOU MUST attempt to run this. See the main 'Testing' section under '2. Development Standards & Conventions' for more details and what to do if it fails or doesn't run tests.)
+
+## 5. `spacenext` Project Specifics (User to elaborate and add more)
+- **API Interaction:**
+    - The frontend interacts with the public SpaceX API v5.
+    - The base URL is `https://api.spacexdata.com/v5`.
+    - API interaction logic is centralized in `src/services/launchService.ts`.
+    - The application uses the browser's `fetch` API for making requests (e.g., POST to `/launches/query` to get upcoming launches).
+    - Data fetching patterns are encapsulated within custom hooks like `src/hooks/useLaunchData.ts` which call the service functions.
+    - **Note:** `docs/specs/main-spec.md` mentions a different API (`rocketlaunch.live`); however, the implemented `launchService.ts` uses `api.spacexdata.com`. **YOU MUST** use the API endpoint defined and used in `src/services/launchService.ts`.
+- **State Management Details:**
+    - As previously noted, state is primarily managed locally within components or via custom hooks using React's `useState` and `useEffect`.
+    - There is no evidence of a global state management library (Redux, Zustand) currently in use.
+    - The `docs/specs/main-spec.md` suggests that state management might occur in `App.tsx` or be lifted, with Context API being a consideration for future complexity but not explicitly implemented project-wide yet. No specific `src/contexts/` directory is defined in the documented structures.
+    - For data like launches, `src/hooks/useLaunchData.ts` handles its own state.
+- **Routing:**
+    - The application appears to be a true single-page application (SPA) focused on a single view (the launch carousel).
+    - There is no evidence of a client-side routing library (like React Router) being used, as confirmed by the absence of `react-router-dom` in `package.json`.
+    - If any display logic changes, it's likely handled by conditional rendering within `App.tsx` or its child components rather than URL-based routing.
+- **Environment Variables (for the `spacenext` frontend app):**
+    - The project uses Vite, which supports environment variables through `.env` files (e.g., `.env.local`) exposed via `import.meta.env.VITE_YOUR_VARIABLE`.
+    - However, currently, there is no evidence in `launchService.ts` or other documentation (`README.md`, `main-spec.md`) that the `spacenext` frontend application itself consumes any custom runtime environment variables (e.g., for API keys or base URLs). The API base URL is hardcoded in `src/services/launchService.ts`.
+    - If new environment variables are needed for the frontend, they should follow Vite's convention (prefixed with `VITE_`).
+    - (Note: JADE, the agent, uses its own set of environment variables for its operations, which are distinct from the `spacenext` frontend's environment variables).
+- **Known Issues/Quirks:**
+    - **API Endpoint Discrepancy:** As noted in "API Interaction," `docs/specs/main-spec.md` refers to a `rocketlaunch.live` API, but the actual implementation in `src/services/launchService.ts` uses `api.spacexdata.com`. The implemented service is the source of truth.
+    - **Application Code:** No specific code-level quirks or major known issues for the `spacenext` application itself are documented in `main-spec.md` or the `README.md`. JADE should proceed with caution and report any unexpected behaviors encountered.
+    - **[User: Please list any non-obvious behaviors, common pitfalls, or areas of the codebase that require special attention that are not covered elsewhere.]**
+- **UI Component Library & Structure:**
+    - There isn't a separate internal UI component library package. Components are organized within the `src/components/` directory.
+    - **General/Reusable UI Components:** Common elements like buttons, spinners, modals, etc., should be placed in `src/components/UI/`.
+    - **Feature-Specific Components:** Components tied to a particular feature (e.g., `LaunchCard` for the `LaunchCarousel`) are typically located within a subdirectory for that feature (e.g., `src/components/LaunchCarousel/`).
+    - **Creating New Components:** Follow the guidelines in `docs/recipes/recipe-create-component.md`. This includes creating a directory for the component in `PascalCase` and potentially an `index.ts` for easier exports.
+    - Styling is done primarily with Tailwind CSS, as per `recipe-create-component.md` and `main-spec.md`.
+
+**IMPORTANT FOR JADE:** Before starting any coding task, ensure you have the latest version of the target branch (usually `main`) by running `git pull origin main`. Always create a new feature/bugfix branch from `main`. 

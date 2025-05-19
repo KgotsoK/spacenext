@@ -1,6 +1,9 @@
 import React from 'react';
 import { Launch, Rocket, Launchpad } from '@/types/launchTypes';
 import { FaCalendarAlt, FaRocket, FaBuilding, FaMapMarkerAlt } from 'react-icons/fa';
+import { fetchLaunchPoem } from '@/services/openaiService';
+import InlineSpinner from '@/components/InlineSpinner';
+import Snackbar from '@/components/Snackbar';
 
 interface LaunchCardProps {
   launch: Launch;
@@ -79,6 +82,40 @@ const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
     formattedDate = `NET ${formattedDate}`;
   }
 
+  const [poem, setPoem] = React.useState<string | null>(null);
+  const [loadingPoem, setLoadingPoem] = React.useState(false);
+  const [poemError, setPoemError] = React.useState<string | null>(null);
+  const [showSnackbar, setShowSnackbar] = React.useState(false);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    if (isActive) {
+      setPoem(null);
+      setPoemError(null);
+      setLoadingPoem(true);
+      fetchLaunchPoem(launch.name, formattedDate, rocketName)
+        .then((result) => {
+          if (!cancelled) {
+            setPoem(result);
+            setLoadingPoem(false);
+          }
+        })
+        .catch((err) => {
+          if (!cancelled) {
+            setPoemError('Failed to fetch poem.');
+            setShowSnackbar(true);
+            setLoadingPoem(false);
+          }
+        });
+    } else {
+      setPoem(null);
+      setPoemError(null);
+      setLoadingPoem(false);
+    }
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive, launch.id]);
+
   return (
     <div className={cardClasses} style={style}>
       {/* Top Section: Image */}
@@ -128,6 +165,19 @@ const LaunchCard: React.FC<LaunchCardProps> = ({ launch, isActive, style }) => {
           </span>
         </p>
       </div>
+      {/* Poem Section */}
+      <div className="mt-4 p-2 bg-gray-800/60 rounded text-sm text-blue-100 min-h-[5rem] flex flex-col items-center justify-center">
+        {loadingPoem && <InlineSpinner />}
+        {!loadingPoem && poem && (
+          <pre className="whitespace-pre-wrap text-center font-mono text-blue-200">{poem}</pre>
+        )}
+        {!loadingPoem && poemError && (
+          <span className="text-red-400">Could not load poem.</span>
+        )}
+      </div>
+      {showSnackbar && poemError && (
+        <Snackbar message={poemError} onClose={() => setShowSnackbar(false)} />
+      )}
     </div>
   );
 };
